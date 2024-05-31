@@ -1,7 +1,6 @@
 
 ### CI/CD README
 
-Create a new file at `./docs/cicd-readme.md`:
 
 ```markdown
 # CI/CD Pipeline
@@ -24,22 +23,22 @@ The CI/CD pipeline is defined in the GitHub Actions workflow file located at `.g
 
 1. **Build**:
    - Triggered on push to `develop` and `master` branches.
-   - Checks out the code.
+   - Check out the code.
    - Sets up Node.js.
    - Installs dependencies.
    - Runs tests.
 
 2. **Deploy to Dev**:
    - Triggered if the build step is successful and the branch is `develop`.
-   - Deploys the application to the Dev environment.
+   - Deploy the application to the Dev environment.
 
 3. **Deploy to Test**:
    - Triggered if the Dev deployment is successful and the branch is `develop`.
-   - Deploys the application to the Test environment.
+   - Deploy the application to the Test environment.
 
 4. **Deploy to STG**:
    - Triggered on push to the `master` branch.
-   - Deploys the application to the STG environment.
+   - Deploy the application to the STG environment.
 
 ## AWS Configuration
 
