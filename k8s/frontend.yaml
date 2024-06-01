@@ -15,12 +15,12 @@ spec:
     spec:
       containers:
         - name: web
-          image: gendi97/todo-frontend:04
+          image: gendi97/todo-frontend:03
           ports:
-            - containerPort: 80
+            - containerPort: 3000
           env:
             - name: REACT_APP_API_URL
-              value: "http://api.my-app.svc.cluster.local:3001/api "
+              value: "http://localhost:3001/api"
 ---
 apiVersion: v1
 kind: Service
@@ -31,6 +31,6 @@ spec:
     app: web
   ports:
     - protocol: TCP
-      port: 80
-      targetPort: 80
+      port: 3000
+      targetPort: 3000
   type: NodePort
