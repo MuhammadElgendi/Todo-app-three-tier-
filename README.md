@@ -1,78 +1,94 @@
+# Todo-app-three-tier
 
-### CI/CD README
+## Run Locally
+
+Clone the project
+
+```bash
+  Git clone https://github.com/MuhammadElgendi/Todo-app-three-tier-.git
+```
 
 
-```markdown
-# CI/CD Pipeline
 
-## Overview
+Install dependencies
 
-This repository uses GitHub Actions for Continuous Integration and Continuous Deployment (CI/CD). The pipeline is designed to build, test, and deploy the application to AWS across three environments: Development (Dev), Testing (Test), and Staging (STG).
+```bash
+  npm install
+```
 
-## Environments
+Start the server
 
-- **Dev**: Deploys on every push to the `develop` branch.
-- **Test**: Deploys if the deployment to Dev is successful.
-- **STG**: Deploys only when the target branch of the merge request is the `master` branch.
+```bash
+  npm run start
+```
 
-## Workflow File
+## Set up the App using the Docker Compose file 
+### The docker-compose file will create 3 environments 
+- Frontend: has the web tier
+- backend: has the API tier 
+- mongo: has the database tier based on MongoDB
+### To set-up the environments and run the app 
+## Make sure that you are in the main dir that contains the docker-compose file  
+or access it by running
+```bash
+cd Todo-app-three-tier
+```
+## use compose up
+```bash
+Docker-compose up --build 
+```
 
-The CI/CD pipeline is defined in the GitHub Actions workflow file located at `.github/workflows/pipeline.yml`.
 
-## Workflow Steps
 
-1. **Build**:
-   - Triggered on push to `develop` and `master` branches.
-   - Check out the code.
-   - Sets up Node.js.
-   - Installs dependencies.
-   - Runs tests.
+#### the output
+![Screenshot from 2023-02-18 23-46-54](https://github.com/MuhammadElgendi/Todo-app-three-tier-/blob/master/images/Screenshot%20from%202024-06-01%2023-12-38.png?raw=true)
+#### Now u can access the app via localhost or by your network from the below provided links  
+![Screenshot from 2023-02-18 23-46-54](https://github.com/MuhammadElgendi/Todo-app-three-tier-/blob/master/images/Screenshot%20from%202024-06-01%2023-15-21.png?raw=true)
 
-2. **Deploy to Dev**:
-   - Triggered if the build step is successful and the branch is `develop`.
-   - Deploy the application to the Dev environment.
+# the app on the browser
+![Screenshot from 2023-02-18 23-46-54](https://github.com/MuhammadElgendi/Todo-app-three-tier-/blob/master/images/Screenshot%20from%202024-06-01%2023-00-17.png?raw=true)
 
-3. **Deploy to Test**:
-   - Triggered if the Dev deployment is successful and the branch is `develop`.
-   - Deploy the application to the Test environment.
 
-4. **Deploy to STG**:
-   - Triggered on push to the `master` branch.
-   - Deploy the application to the STG environment.
+ 
 
-## AWS Configuration
 
-The deployment steps use the AWS CLI to sync the build artifacts to the respective S3 buckets or other AWS services. Ensure the following AWS credentials are added to your repository secrets:
+#
+#
+#
+# Deploy and set-up the app on minikube cluster 
 
-- `AWS_ACCESS_KEY_ID`
-- `AWS_SECRET_ACCESS_KEY`
-- `AWS_REGION`
+## cd the k8s dir   
+```bash
+cd k8s
+```
 
-## Branch Protection Rules
+## create a namespace for the app firstly to be isolated from your environment 
 
-To ensure the integrity of the `master` branch, it is protected with the following rules:
+```bash
+kubectl apply -f namespace.yaml
+```
+## use the created namespace 
+```
+kubectl config set-context --current --namespace=my-app
+```
+## deploy the app on the new namespace
+```bash
+kubectl apply -f .
+```
 
-- Only repository owners can merge into `master`.
-- Pull requests require approval before merging.
-- Status checks must pass before merging.
+## check the deployments and services has been deployed successfully 
+```bash
+kubectl get all -o wide 
+```
+###  The output must be like 
+![Screenshot from 2023-02-18 23-46-54](https://github.com/MuhammadElgendi/Todo-app-three-tier-/blob/master/images/Screenshot%20from%202024-06-01%2023-45-16.png?raw=true)
 
-## How to Trigger the Pipeline
+## access the frontend(web) service
+```bash
+minikube service my-service --url
+```
 
-- **For Dev and Test Environments**: Push your changes to the `develop` branch. If the Dev deployment succeeds, the pipeline will automatically proceed to deploy to the Test environment.
-- **For STG Environment**: Merge changes into the `master` branch through a pull request. Ensure all required reviews and status checks are completed.
+## The output 
+![Screenshot from 2023-02-18 23-46-54](https://github.com/MuhammadElgendi/Todo-app-three-tier-/blob/master/images/Screenshot%20from%202024-06-01%2023-59-37.png?raw=true)
 
-## Troubleshooting
 
-- Check the Actions tab in GitHub for detailed logs of each step.
-- Ensure your AWS credentials and environment variables are correctly configured.
-- Verify that your branch protection rules are correctly set up in the repository settings.
-
-## Contributing to CI/CD
-
-1. Update the workflow file `.github/workflows/pipeline.yml` as needed.
-2. Ensure your changes are tested by pushing to a feature branch and observing the pipeline behavior.
-3. Submit a pull request with your updates.
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](../LICENSE) file for details.
