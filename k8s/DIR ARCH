@@ -1,0 +1,7 @@
+k8s/
+  ├── frontend.yaml
+  ├── backend.yaml
+  ├── secret.yaml
+  ├── pv.yaml
+  ├── mongodb.yaml
+  ├── pvc.yaml
