@@ -17,7 +17,7 @@ jobs:
       - name: Set up Kubeconfig
         run: |
           mkdir -p $HOME/.kube
-          cp ./k8s/config $HOME/.kube/config
+          cp  k8s/config  $HOME/.kube/config
           chmod 600 $HOME/.kube/config
 
       #- name: Set up Kubectl
