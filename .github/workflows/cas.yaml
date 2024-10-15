@@ -120,8 +120,8 @@ jobs:
         with:
           kubeconfig: ${{ env.KUBECONFIG }} | base64 --decode
 
-      - name: Check Kubernetes context
-        run: kubectl config current-context
+#      - name: Check Kubernetes context
+#        run: kubectl config current-context
 
       - name: Deploy
         run: |
