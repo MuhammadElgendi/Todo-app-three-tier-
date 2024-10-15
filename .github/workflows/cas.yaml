@@ -1,21 +1,26 @@
 name: Frontend CI/CD Pipeline
-on:
-  workflow_dispatch:
+
 on:
   push:
     branches:
       - main
       - master
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+
       - name: Set up Kubectl
         uses: azure/k8s-set-context@v1
         with:
           kubeconfig: ${{ secrets.KUBECONFIG }}
+
+      - name: Check Kubernetes context
+        run: kubectl config current-context
+
       - name: Deploy
         run: |
           kubectl apply -f kubernetes/deployment.yaml
